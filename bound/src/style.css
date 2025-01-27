@@ -1,0 +1,19 @@
+@import "tailwindcss";
+/* Background: #121212 (Dark Gray/Black)
+Primary Accent: #4F46E5 (Indigo 500)
+Secondary Accent: #9CA3AF (Gray 400)
+Text Color: #E5E7EB (Gray 100 - for high contrast text)
+Hover Effect: #6366F1 (Indigo 400 - slightly brighter for interaction feedback)
+Borders: #374151 (Gray 700)
+Error/Warning: #EF4444 (Red 500 - subtle for warnings/errors) */
+.bg {
+  background-color: #1d3557;
+}
+
+.font-d {
+  font-family: "Playfair Display", sans-serif;
+}
+
+.font-l {
+  font-family: "Lato", sans-serif;
+}
