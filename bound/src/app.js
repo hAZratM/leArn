@@ -176,6 +176,7 @@ function renderBooks() {
       "w-[2em] opacity-60 transition-all duration-300 hover:opacity-100 fill object-contain active:scale-85 active:contrast-90 "
     );
     deleteIcon.setAttribute("src", "./src/trashcan.svg");
+    deleteIcon.setAttribute("alt", "Delete");
 
     const readStatus = document.createElement("button");
     // To modify the array
