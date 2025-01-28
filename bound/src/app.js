@@ -163,8 +163,22 @@ function renderBooks() {
     ratingSpan.textContent = bk.rating;
     rating.appendChild(ratingSpan);
     bookCard.appendChild(rating);
+    // Add a status div
+    const statusDiv = document.createElement("div");
+    statusDiv.setAttribute(
+      "class",
+      "flex justify-between  items center px-3 py-2 mb-2"
+    );
+
+    const deleteIcon = document.createElement("img");
+    deleteIcon.setAttribute(
+      "class",
+      "w-[2em] opacity-60 transition-all duration-300 hover:opacity-100 fill object-contain active:scale-85 active:contrast-90 "
+    );
+    deleteIcon.setAttribute("src", "./src/trashcan.svg");
 
     const readStatus = document.createElement("button");
+    // To modify the array
     readStatus.setAttribute("data-index", index);
 
     if (!bk.isRead) {
@@ -189,8 +203,20 @@ function renderBooks() {
       }
     });
 
-    bookCard.appendChild(readStatus);
+    const statusIcon = document.createElement("div");
+    statusIcon.setAttribute("class", "flex justify-center");
+    statusIcon.prepend(readStatus);
+
+    statusDiv.appendChild(statusIcon);
+    statusDiv.appendChild(deleteIcon);
+
+    bookCard.appendChild(statusDiv);
     books.prepend(bookCard);
+
+    deleteIcon.addEventListener("click", () => {
+      myLibrary.splice(index, 1); // removes from array
+      bookCard.remove();
+    });
   });
 }
 
