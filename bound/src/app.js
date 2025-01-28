@@ -1,45 +1,53 @@
 const books = document.getElementById("books");
 const bookss = document.getElementById("book__card");
+const taskCard = document.getElementById("task__add-card");
+const form = document.querySelector("form");
+const addButton = document.getElementById("task__add");
 
-// Append the book card to the parent container
+const inputElements = document.querySelectorAll("form input, form select");
+
+function getValue() {
+  const formData = {};
+  inputElements.forEach((input) => {
+    const key = input.id;
+    const formedKey = key.slice(5, key.length);
+
+    if (
+      formedKey === "totalPages" ||
+      formedKey === "publicationYear" ||
+      formedKey === "rating"
+    ) {
+      const inputVal = Number(input.value);
+      formData[formedKey] = inputVal;
+    } else if (formedKey !== "isRead") {
+      formData[formedKey] = input.value;
+    } else {
+      // console.log("ke:" + formedKey);
+      // console.log(input.value);
+      if (input.value === "yes") {
+        formData[formedKey] = true;
+      } else if (input.value === "no") {
+        formData[formedKey] = false;
+      }
+    }
+  });
+
+  return {
+    title: formData.title,
+    genre: formData.genre,
+    author: formData.author,
+    totalPages: formData.totalPages,
+    publicationYear: formData.publicationYear,
+    isRead: formData.isRead,
+    rating: formData.rating,
+  };
+}
+
+addButton.addEventListener("click", () => {
+  taskCard.classList.toggle("hidden");
+});
 
 const myLibrary = [
-  {
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    totalPages: 281,
-    isRead: false,
-    genre: "Fiction",
-    publicationYear: 1960,
-    rating: 4.8,
-  },
-  {
-    title: "1984",
-    author: "George Orwell",
-    totalPages: 328,
-    isRead: false,
-    genre: "Dystopian",
-    publicationYear: 1949,
-    rating: 4.7,
-  },
-  {
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    totalPages: 180,
-    isRead: false,
-    genre: "Classic",
-    publicationYear: 1925,
-    rating: 4.4,
-  },
-  {
-    title: "The Catcher in the Rye",
-    author: "J.D. Salinger",
-    totalPages: 277,
-    isRead: false,
-    genre: "Fiction",
-    publicationYear: 1951,
-    rating: 4.2,
-  },
   {
     title: "Pride and Prejudice",
     author: "Jane Austen",
@@ -52,20 +60,20 @@ const myLibrary = [
 ];
 
 function Book(
-  author,
   title,
-  totalPages,
-  isRead,
   genre,
+  author,
+  totalPages,
   publicationYear,
+  isRead,
   rating
 ) {
-  this.author = author;
   this.title = title;
-  this.totalPages = totalPages;
-  this.isRead = isRead;
   this.genre = genre;
+  this.author = author;
+  this.totalPages = totalPages;
   this.publicationYear = publicationYear;
+  this.isRead = isRead;
   this.rating = rating;
 }
 
@@ -73,85 +81,136 @@ function addBookToLibrary(
   title,
   genre,
   author,
-  isRead,
   totalPages,
   publicationYear,
+  isRead,
   rating
 ) {
   const book = new Book(
-    author,
     title,
-    totalPages,
-    isRead,
     genre,
+    author,
+    totalPages,
     publicationYear,
+    isRead,
     rating
   );
+
   myLibrary.push(book);
 }
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-addBookToLibrary("author1", "title1", 100, false, "horror", 2010, 4.8);
-
-myLibrary.forEach((bk) => {
-  const bookCard = document.createElement("div");
-  bookCard.setAttribute("id", "book__card");
-  bookCard.setAttribute(
-    "class",
-    "bg-white shadow-xs rounded-md overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+  const formData = getValue();
+  console.log(formData);
+  addBookToLibrary(
+    formData.title,
+    formData.genre,
+    formData.author,
+    formData.totalPages,
+    formData.publicationYear,
+    formData.isRead,
+    formData.rating
   );
 
-  const imageContainer = document.createElement("div");
-  imageContainer.setAttribute("class", "object-cover");
+  // rerender & reset
+  renderBooks();
+  taskCard.classList.add("hidden");
+  form.reset();
 
-  const img = document.createElement("img");
-  img.setAttribute(
-    "src",
-    "https://picsum.photos/300/300?random=" + Math.random()
-  );
-  img.setAttribute("alt", "Random");
-
-  imageContainer.appendChild(img);
-  bookCard.appendChild(imageContainer);
-
-  const title = document.createElement("h3");
-  title.setAttribute("class", "text-xl font-l text-center mt-2");
-  const titleSpan = document.createElement("span");
-  titleSpan.setAttribute("class", "details");
-  title.appendChild(titleSpan);
-  bookCard.appendChild(title);
-
-  const rating = document.createElement("p");
-  rating.setAttribute(
-    "class",
-    "text-amber-800 text-md text-center font-d mb-4"
-  );
-  const ratingSpan = document.createElement("span");
-  ratingSpan.setAttribute("class", "details");
-
-  titleSpan.textContent = bk.title;
-  ratingSpan.textContent = bk.rating;
-  rating.appendChild(ratingSpan);
-  bookCard.appendChild(rating);
-  if (!bk.isRead) {
-    const readStatus = document.createElement("p");
-    readStatus.innerText = "Not Read";
-    readStatus.setAttribute(
-      "class",
-      "font-l text-right mx-3 mb-3 py-1 text-sm rounded-full px-2 inline-block bg-red-50 hover:bg-red-200 hover:border-red-500 border border-red-400 text-end"
-    );
-    bookCard.appendChild(readStatus);
-  } else {
-    const readStatus = document.createElement("p");
-    readStatus.innerText = "Read";
-    readStatus.setAttribute(
-      "class",
-      "font-l text-right mx-3 mb-3 py-1 text-sm rounded-full px-2 inline-block bg-emerald-50 border hover:bg-emerald-200 border-emerald-400 hover:border-emerald-500 bottom"
-    );
-    bookCard.appendChild(readStatus);
-  }
-
-  books.appendChild(bookCard);
+  console.log(myLibrary);
 });
 
-// make the read button work
-// The task input form
+function renderBooks() {
+  books.innerHTML = "";
+  myLibrary.forEach((bk, index) => {
+    const bookCard = document.createElement("div");
+    bookCard.setAttribute("id", "book__card");
+    bookCard.setAttribute(
+      "class",
+      "bg-white shadow-xs rounded-md overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+    );
+
+    const imageContainer = document.createElement("div");
+    imageContainer.setAttribute("class", "object-cover");
+
+    const img = document.createElement("img");
+    img.setAttribute(
+      "src",
+      "https://picsum.photos/300/300?random=" + Math.random()
+    );
+    img.setAttribute("alt", "Random");
+
+    imageContainer.appendChild(img);
+    bookCard.appendChild(imageContainer);
+
+    const title = document.createElement("h3");
+    title.setAttribute("class", "text-xl font-l text-center mt-2");
+    const titleSpan = document.createElement("span");
+    titleSpan.setAttribute("class", "details");
+    title.appendChild(titleSpan);
+    bookCard.appendChild(title);
+
+    const rating = document.createElement("p");
+    rating.setAttribute(
+      "class",
+      "text-amber-800 text-md text-center font-d mb-4"
+    );
+    const ratingSpan = document.createElement("span");
+    ratingSpan.setAttribute("class", "details");
+
+    titleSpan.textContent = bk.title;
+    ratingSpan.textContent = bk.rating;
+    rating.appendChild(ratingSpan);
+    bookCard.appendChild(rating);
+
+    const readStatus = document.createElement("button");
+    readStatus.setAttribute("data-index", index);
+
+    if (!bk.isRead) {
+      readStatus.innerText = "To Read";
+      readStatus.setAttribute("class", "not-read isRead font-l");
+    } else {
+      readStatus.innerText = "Completed";
+      readStatus.setAttribute("class", "read isRead font-l");
+    }
+
+    readStatus.addEventListener("click", () => {
+      myLibrary[index].isRead = !myLibrary[index].isRead;
+
+      if (readStatus.classList.contains("read")) {
+        readStatus.classList.remove("read");
+        readStatus.classList.add("not-read");
+        readStatus.innerText = "To Read";
+      } else {
+        readStatus.classList.remove("not-read");
+        readStatus.classList.add("read");
+        readStatus.innerText = "Completed";
+      }
+    });
+
+    bookCard.appendChild(readStatus);
+    books.prepend(bookCard);
+  });
+}
+
+renderBooks();
+// Remove the separate event listener setup since it's now handled in renderBooks
+// Delete or comment out this part:
+/*
+const isRead = document.querySelectorAll(".isRead");
+for (let i = 0; i < isRead.length; i++) {
+  const currRead = isRead[i];
+  currRead.addEventListener("click", (e) => {
+      if (currRead.classList.contains("read")) {
+          currRead.classList.toggle("read");
+          currRead.classList.toggle("not-read");
+          currRead.innerText = "To Read";
+      } else {
+          currRead.classList.toggle("not-read");
+          currRead.classList.toggle("read");
+          currRead.innerText = "Completed";
+      }
+  });
+}
+*/

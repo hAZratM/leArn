@@ -15,7 +15,8 @@
       <div class="py-6 mx-4 relative flex flex-col items-center">
         <nav class="flex absolute right-10 items-center pr-2 pb-14">
           <div
-            class="border-slate-100 border-2 rounded-full opacity-80 hover:opacity-100 fixed top-10"
+            id="task__add"
+            class="border-slate-100 bg-slate-100/10 mix-blend-difference border-2 rounded-full opacity-80 hover:opacity-100 fixed top-10 z-9"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -64,10 +65,130 @@
             />
           </div>
         </section>
+        <section
+          class="inset-6 fixed w-full h-full z-7 transition-all duration-500 hidden"
+          id="task__add-card"
+        >
+          <div
+            class="h-auto z-8 w-[90%] bg-white backdrop-blur-2xl rounded-2xl border border-slate-300 shadow-2xl"
+          >
+            <form
+              class="flex flex-col gap-4 p-4 bg-white shadow-md rounded-lg w-full max-w-md mt-8"
+            >
+              <!-- Title -->
+              <label for="card-title" class="flex flex-col">
+                <p class="font-d text-md font-medium text-gray-700">Title</p>
+                <input
+                  type="text"
+                  id="card-title"
+                  name="card-title"
+                  class="form-input"
+                  placeholder="Enter the title"
+                />
+              </label>
+
+              <!-- Genre -->
+              <label for="card-genre" class="flex flex-col">
+                <p class="font-d text-md font-medium text-gray-700">Genre</p>
+                <input
+                  type="text"
+                  id="card-genre"
+                  name="card-genre"
+                  class="form-input"
+                  placeholder="Enter the genre"
+                />
+              </label>
+
+              <!-- Author -->
+              <label for="card-author" class="flex flex-col">
+                <p class="font-d text-md font-medium text-gray-700">Author</p>
+                <input
+                  type="text"
+                  id="card-author"
+                  name="card-author"
+                  class="form-input"
+                  placeholder="Enter the author's name"
+                />
+              </label>
+
+              <!-- Total Pages and Publication Year in One Row -->
+              <div class="flex gap-4">
+                <!-- Total Pages -->
+                <label for="card-totalPages" class="flex flex-col w-[45%]">
+                  <p class="font-d text-md font-medium text-gray-700">
+                    Total Pages
+                  </p>
+                  <input
+                    type="number"
+                    id="card-totalPages"
+                    name="card-totalPages"
+                    class="form-input"
+                    placeholder="Enter total pages"
+                  />
+                </label>
+
+                <!-- Publication Year -->
+                <label for="card-publicationYear" class="flex flex-col w-1/2">
+                  <p class="font-d text-md font-medium text-gray-700">
+                    Publication Year
+                  </p>
+                  <input
+                    type="number"
+                    id="card-publicationYear"
+                    name="card-publicationYear"
+                    class="form-input"
+                    placeholder="Enter the year"
+                  />
+                </label>
+              </div>
+
+              <!-- Read and Rating in One Row -->
+              <div class="flex gap-4">
+                <!-- Is Read -->
+                <label for="card-isRead" class="flex flex-col w-1/2">
+                  <p class="font-d text-md font-medium text-gray-700">
+                    Have You Read It?
+                  </p>
+                  <select
+                    id="card-isRead"
+                    name="card-isRead"
+                    class="form-input"
+                  >
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </label>
+
+                <!-- Rating -->
+                <label for="card-rating" class="flex flex-col w-1/2">
+                  <p class="font-d text-md font-medium text-gray-700">Rating</p>
+                  <input
+                    type="number"
+                    id="card-rating"
+                    name="card-rating"
+                    step="0.1"
+                    min="0"
+                    max="10"
+                    class="form-input"
+                    placeholder="Rate out of 10"
+                  />
+                </label>
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                class="subButton mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </section>
       </div>
     </header>
 
-    <main class="mt-20 my-6 mx-4">
+    <main class="my-26 mx-4">
       <h2 class="font-d text-2xl">Your Books</h2>
       <div
         id="books"
