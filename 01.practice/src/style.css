@@ -1,0 +1,40 @@
+@import "tailwindcss";
+/* Background: #121212 (Dark Gray/Black)
+Primary Accent: #4F46E5 (Indigo 500)
+Secondary Accent: #9CA3AF (Gray 400)
+Text Color: #E5E7EB (Gray 100 - for high contrast text)
+Hover Effect: #6366F1 (Indigo 400 - slightly brighter for interaction feedback)
+Borders: #374151 (Gray 700)
+Error/Warning: #EF4444 (Red 500 - subtle for warnings/errors) */
+.bg {
+  background-color: #1d3557;
+}
+
+.font-d {
+  font-family: "Playfair Display", sans-serif;
+}
+
+.font-l {
+  font-family: "Lato", sans-serif;
+}
+
+.not-read {
+  @apply text-sm rounded-full px-3  bg-red-50 border hover:bg-red-200 border-red-400 hover:border-red-500 active:scale-95 active:contrast-90 transition-all duration-300;
+}
+
+.read {
+  @apply text-sm rounded-full px-2  bg-emerald-50 border hover:bg-emerald-200 border-emerald-400 hover:border-emerald-500 active:scale-95 active:contrast-90    transition-all duration-300;
+}
+
+.form-input {
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  outline: none;
+}
+
+.form-input:focus {
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  border-color: #60a5fa;
+}
